@@ -15,6 +15,8 @@ pub fn setup_camera(mut commands: Commands) {
         Camera3d::default(),
         Projection::Perspective(PerspectiveProjection {
             fov: 60.0_f32.to_radians(),
+            near: 0.1,   // set near clipping plane
+            far: 1000.0, // set far clipping plane to something reasonable
             ..default()
         }),
         MyCameraMarker {
@@ -100,6 +102,6 @@ pub fn camera_movenent(
         direction = direction.normalize();
     }
 
-    let speed = 5.0;
+    let speed = 15.0;
     transform.translation += direction * speed * time.delta().as_secs_f32();
 }
