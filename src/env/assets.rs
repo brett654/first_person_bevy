@@ -1,7 +1,7 @@
 use bevy::{
     prelude::*,
     gltf::GltfAssetLabel,
-    scene::{SceneRoot}, // <--- this line fixes the issue
+    scene::{SceneRoot},
 };
 
 pub fn load_assets(
