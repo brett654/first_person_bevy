@@ -5,6 +5,6 @@ TODOS:
 - Have quake style movement
 
 Issues:
-assets not render all verticies(due to UV layers not supported)
-- Solution:
-  - make own assets
+- assets not render all verticies(due to UV layers not supported)
+  - Solution:
+    - make own assets
