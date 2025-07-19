@@ -2,21 +2,15 @@ mod cursor;
 use cursor::cursor::CursorPlugin;
 
 mod player;
-use player::{setup_camera, camera_mouse_look, camera_movenent};
+use player::player::PlayerPlugin;
 
 mod env;
-use env::*;
+use env::{AssetPlugin, LightPlugin};
 
 use bevy::prelude::*;
 
 fn main() {
     App::new()
-        .add_plugins((DefaultPlugins, CursorPlugin))
-        .add_systems(Startup, (setup_camera, load_assets, setup_light))
-        .add_systems(Update, (
-            camera_mouse_look,
-            camera_movenent,
-            spawn_loaded_assets,  // <--- Run this once assets are ready
-        ))
+        .add_plugins((DefaultPlugins, CursorPlugin, AssetPlugin, PlayerPlugin, LightPlugin))
         .run();
 }

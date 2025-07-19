@@ -1,7 +1,5 @@
-pub mod light;
 pub mod assets;
+pub mod light;
 
-pub use {
-    light::*,
-    assets::*,
-};
+pub use assets::AssetPlugin;
+pub use light::LightPlugin;

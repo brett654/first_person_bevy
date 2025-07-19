@@ -3,6 +3,15 @@ use bevy::{
     pbr::CascadeShadowConfigBuilder,
 };
 
+pub struct LightPlugin;
+
+impl Plugin for LightPlugin {
+    fn build(&self, app: &mut App) {
+        app
+            .add_systems(Startup, setup_light);
+    }
+}
+
 pub fn setup_light(mut commands: Commands) {     
     commands.spawn((
         DirectionalLight {
