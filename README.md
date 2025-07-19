@@ -7,4 +7,4 @@ TODOS:
 Issues:
 assets not render all verticies(due to UV layers not supported)
 - Solution:
- - make own assets
+  - make own assets
