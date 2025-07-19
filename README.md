@@ -1,8 +1,8 @@
 Using the bevy engine to create a first person experience where I can load assets.
 
 TODOS:
--implement collisions
--Have quake style movement
+- implement collisions
+- Have quake style movement
 
 Issues:
 assets not render all verticies(due to UV layers not supported)
