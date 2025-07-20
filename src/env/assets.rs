@@ -6,11 +6,11 @@ use bevy::{
 
 #[derive(Component)] pub struct DragonTag;
 
-#[derive(Component)] pub struct TerrainTag;
-
 #[derive(Component)] pub struct SpiderTag;
 
 #[derive(Component)] pub struct BoxTag;
+
+#[derive(Component)] pub struct SkyboxTag;
 
 #[derive(Resource)]
 pub struct GameAssets {
@@ -18,6 +18,7 @@ pub struct GameAssets {
     dragon_scene: Handle<Scene>,
     spider_scene: Handle<Scene>,
     terrain_scene: Handle<Scene>,
+    skybox_scene: Handle<Scene>,
 }
 
 pub struct AssetPlugin;
@@ -41,7 +42,8 @@ pub fn load_assets(mut commands: Commands, asset_server: Res<AssetServer>) {
         box_scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset("box.glb")),
         dragon_scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset("fire_dragon.glb")),
         spider_scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset("black_widow_animated_downloadable.glb")),
-        terrain_scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset("terrain_dristibute_gn.glb")),
+        terrain_scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset("terrain_test.glb")),
+        skybox_scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset("nebula_skybox_16k.glb")),
     });
 }
 
@@ -79,6 +81,7 @@ pub fn spawn_loaded_assets(
         &assets.dragon_scene,
         &assets.spider_scene,
         &assets.terrain_scene,
+        &assets.skybox_scene,
     ]
     .iter()
     .all(|handle| {
@@ -95,15 +98,17 @@ pub fn spawn_loaded_assets(
 
     tracker.spawned = true;
 
-    /*
+    
     // Spawn everything
+    /*
     spawn_scene(
         &mut commands,
         assets.box_scene.clone(),
         Transform::from_xyz(2.0, 0.0, 2.0),
         BoxTag,
     );
-
+    */
+    /* 
     spawn_scene(
         &mut commands,
         assets.dragon_scene.clone(),
@@ -117,11 +122,18 @@ pub fn spawn_loaded_assets(
         Transform::from_xyz(-2.0, 0.0, 4.0),
         SpiderTag,
     );
-    */
+
     spawn_scene(
         &mut commands,
         assets.terrain_scene.clone(),
         Transform::from_xyz(0.0, 0.0, 0.0).with_scale(Vec3::splat(10.0)),
         TerrainTag,
+    );
+    */
+    spawn_scene(
+        &mut commands,
+        assets.skybox_scene.clone(),
+        Transform::from_translation(Vec3::ZERO).with_scale(Vec3::splat(500.0)), // Adjust scale as needed
+        SkyboxTag, // You can define this
     );
 }

@@ -1,7 +1,9 @@
 use bevy::{
     input::{mouse::MouseMotion},
-    prelude::*
+    prelude::*,
+    render::camera::PerspectiveProjection,
 };
+use bevy_rapier3d::prelude::*;
 
 #[derive(Component)]
 pub struct MyCameraMarker {
@@ -19,14 +21,19 @@ pub fn setup_camera(mut commands: Commands) {
             far: 1000.0, // set far clipping plane to something reasonable
             ..default()
         }),
+        Transform::from_xyz(10.0, 50.0, 10.0)
+            .looking_at(Vec3::ZERO, Vec3::Y),
+        GlobalTransform::default(),
+        RigidBody::Dynamic,
+        Collider::capsule_y(0.9, 0.4), // height, radius
+        Velocity::default(),
+        GravityScale(1.0),
+        LockedAxes::ROTATION_LOCKED,
         MyCameraMarker {
             yaw: 0.0,
             pitch: 0.0,
             sensitivity: 0.001,
         },
-        Transform::from_xyz(10.0, 50.0, 10.0)
-            .looking_at(Vec3::ZERO, Vec3::Y),
-        GlobalTransform::default(),
     ));
 }
 
