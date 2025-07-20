@@ -1,7 +1,5 @@
 use bevy::{
-    prelude::*,
-    color::palettes::css::*,
-    pbr::CascadeShadowConfigBuilder,
+    color::palettes::css::*, pbr::{CascadeShadowConfigBuilder, DirectionalLightShadowMap}, prelude::*
 };
 use std::f32::consts::PI;
 
@@ -20,20 +18,23 @@ pub fn setup_light(
     mut materials: ResMut<Assets<StandardMaterial>>,
     //asset_server: Res<AssetServer>,
 ) {
+    /*
     commands.insert_resource(AmbientLight {
-        color: ORANGE_RED.into(),
-        brightness: 200.0,
+        color: Color::WHITE,
+        brightness: 1.0,
         ..default()
     });
-
+    */
+    // red point light
+    /*
     commands.spawn((
         PointLight {
-            intensity: 100_000.0,
+            intensity: 5000.0,
             color: RED.into(),
             shadows_enabled: true,
             ..default()
         },
-        Transform::from_xyz(1.0, 2.0, 0.0),
+        Transform::from_xyz(-20.0, 5.0, 0.0),
         children![(
             Mesh3d(meshes.add(Sphere::new(0.1).mesh().uv(32, 18))),
             MeshMaterial3d(materials.add(StandardMaterial {
@@ -43,18 +44,19 @@ pub fn setup_light(
             })),
         )],
     ));
-     
+    */
+    /*
     // green spot light
     commands.spawn((
         SpotLight {
-            intensity: 100_000.0,
+            intensity: 5000.0,
             color: LIME.into(),
             shadows_enabled: true,
             inner_angle: 0.6,
             outer_angle: 0.8,
             ..default()
         },
-        Transform::from_xyz(-1.0, 2.0, 0.0).looking_at(Vec3::new(-1.0, 0.0, 0.0), Vec3::Z),
+        Transform::from_xyz(0.0, 5.0, 0.0).looking_at(Vec3::new(0.0, 0.0, 0.0), Vec3::Z),
         children![(
             Mesh3d(meshes.add(Capsule3d::new(0.1, 0.125))),
             MeshMaterial3d(materials.add(StandardMaterial {
@@ -69,12 +71,12 @@ pub fn setup_light(
     // blue point light
     commands.spawn((
         PointLight {
-            intensity: 100_000.0,
+            intensity: 5000.0,
             color: BLUE.into(),
             shadows_enabled: true,
             ..default()
         },
-        Transform::from_xyz(0.0, 4.0, 0.0),
+        Transform::from_xyz(20.0, 5.0, 0.0),
         children![(
             Mesh3d(meshes.add(Sphere::new(0.1).mesh().uv(32, 18))),
             MeshMaterial3d(materials.add(StandardMaterial {
@@ -84,7 +86,7 @@ pub fn setup_light(
             })),
         )],
     ));
-
+    */ 
     // directional 'sun' light
     commands.spawn((
         DirectionalLight {
@@ -92,20 +94,13 @@ pub fn setup_light(
             shadows_enabled: true,
             ..default()
         },
-        Transform {
-            translation: Vec3::new(0.0, 2.0, 0.0),
-            rotation: Quat::from_rotation_x(-PI / 4.),
-            ..default()
-        },
-        // The default cascade config is designed to handle large scenes.
-        // As this example has a much smaller world, we can tighten the shadow
-        // bounds for better visual quality.
+        Transform::from_xyz(50.0, 100.0, 50.0).looking_at(Vec3::ZERO, Vec3::Y),
         CascadeShadowConfigBuilder {
-            first_cascade_far_bound: 4.0,
-            maximum_distance: 10.0,
+            // Extend the shadow camera bounds to cover your scene better
+            first_cascade_far_bound: 100.0,    // how far the closest shadow cascade covers
+            maximum_distance: 500.0,          // total max distance shadows cover
             ..default()
         }
         .build(),
     ));
-    
 }

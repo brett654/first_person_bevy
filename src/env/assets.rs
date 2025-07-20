@@ -129,11 +129,12 @@ pub fn spawn_loaded_assets(
         Transform::from_xyz(0.0, 0.0, 0.0).with_scale(Vec3::splat(10.0)),
         TerrainTag,
     );
-    */
+    
     spawn_scene(
         &mut commands,
         assets.skybox_scene.clone(),
         Transform::from_translation(Vec3::ZERO).with_scale(Vec3::splat(500.0)), // Adjust scale as needed
         SkyboxTag, // You can define this
     );
+    */
 }

@@ -6,7 +6,7 @@ use bevy::{
 use bevy_rapier3d::prelude::*;
 
 #[derive(Component)]
-pub struct MyCameraMarker {
+pub struct MyCameraController {
     pub yaw: f32,
     pub pitch: f32,
     pub sensitivity: f32,
@@ -29,7 +29,7 @@ pub fn setup_camera(mut commands: Commands) {
         Velocity::default(),
         GravityScale(1.0),
         LockedAxes::ROTATION_LOCKED,
-        MyCameraMarker {
+        MyCameraController {
             yaw: 0.0,
             pitch: 0.0,
             sensitivity: 0.001,
@@ -39,7 +39,7 @@ pub fn setup_camera(mut commands: Commands) {
 
 pub fn camera_mouse_look(
     mut mouse_motion_events: EventReader<MouseMotion>,
-    mut query: Query<(&mut MyCameraMarker, &mut Transform)>,
+    mut query: Query<(&mut MyCameraController, &mut Transform)>,
     windows: Query<&Window>,
 ) {
     let window = match windows.single() {

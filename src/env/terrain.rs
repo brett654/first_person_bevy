@@ -1,6 +1,7 @@
 use bevy::{
     color::palettes::css::*,
     prelude::*,
+    
     render::{
         mesh::{Indices},
         render_asset::RenderAssetUsages,
@@ -28,10 +29,24 @@ fn setup_terrain(
 ) {
     let width = 100.0;
     let height = 100.0;
-
+ 
     // ground plane
     commands.spawn((
         Mesh3d(meshes.add(Plane3d::default().mesh().size(width, height))),
+        MeshMaterial3d(materials.add(StandardMaterial {
+            base_color: Color::WHITE,
+            perceptual_roughness: 1.0,
+            ..default()
+        })),
+        Transform::IDENTITY,
+        Collider::cuboid(width / 2.0, 0.01, height / 2.0),
+        RigidBody::Fixed,
+        TerrainTag,
+    ));
+    /*
+    let panel_mesh = meshes.add(create_panel_mesh(width, height));
+    commands.spawn((
+        Mesh3d(panel_mesh),
         MeshMaterial3d(materials.add(StandardMaterial {
             base_color: Color::WHITE,
             perceptual_roughness: 1.0,
@@ -42,27 +57,22 @@ fn setup_terrain(
         RigidBody::Fixed,
         TerrainTag,
     ));
-
-    /*
-    commands.spawn((
-        Mesh3d(mesh),
-        MeshMaterial3d(material),
-        Transform::default(),
-        Collider::cuboid(width / 2.0, 0.01, height / 2.0),
-        RigidBody::Fixed,
-        TerrainTag,
-    ));*/
+    */
 
     // cube
+    /* 
     commands.spawn((
         Mesh3d(meshes.add(Cuboid::default())),
         MeshMaterial3d(materials.add(StandardMaterial {
             base_color: DEEP_PINK.into(),
             ..default()
         })),
-        Transform::from_xyz(0.0, 10.0, 0.0),
-        //RigidBody::Dynamic,
+        Transform::from_xyz(20.0, 10.0, 0.0),
+        Collider::cuboid(0.5, 0.5, 0.5),
+        RigidBody::Dynamic,
     ));
+    */
+
 }
 
 pub fn create_panel_mesh(width: f32, height: f32) -> Mesh {
