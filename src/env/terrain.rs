@@ -14,7 +14,7 @@ pub struct TerrainPlugin;
 
 impl Plugin for TerrainPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(Startup, (setup_terrain));
+        app.add_systems(Startup, (spawn_ground_panel, spawn_cube));
     }
 }
 
@@ -22,16 +22,16 @@ impl Plugin for TerrainPlugin {
 
 #[derive(Component)] pub struct TerrainTag;
 
-fn setup_terrain(
+fn spawn_ground_panel(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
+    mut materials: ResMut<Assets<StandardMaterial>>,   
 ) {
     let width = 100.0;
     let height = 100.0;
  
     // ground plane
-    commands.spawn((
+    commands.spawn( (
         Mesh3d(meshes.add(Plane3d::default().mesh().size(width, height))),
         MeshMaterial3d(materials.add(StandardMaterial {
             base_color: Color::WHITE,
@@ -43,24 +43,14 @@ fn setup_terrain(
         RigidBody::Fixed,
         TerrainTag,
     ));
-    /*
-    let panel_mesh = meshes.add(create_panel_mesh(width, height));
-    commands.spawn((
-        Mesh3d(panel_mesh),
-        MeshMaterial3d(materials.add(StandardMaterial {
-            base_color: Color::WHITE,
-            perceptual_roughness: 1.0,
-            ..default()
-        })),
-        Transform::default(),
-        Collider::cuboid(width / 2.0, 0.01, height / 2.0),
-        RigidBody::Fixed,
-        TerrainTag,
-    ));
-    */
+}
 
+fn spawn_cube(
+    mut commands: Commands,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
+) {
     // cube
-    /* 
     commands.spawn((
         Mesh3d(meshes.add(Cuboid::default())),
         MeshMaterial3d(materials.add(StandardMaterial {
@@ -70,9 +60,7 @@ fn setup_terrain(
         Transform::from_xyz(20.0, 10.0, 0.0),
         Collider::cuboid(0.5, 0.5, 0.5),
         RigidBody::Dynamic,
-    ));
-    */
-
+    ));   
 }
 
 pub fn create_panel_mesh(width: f32, height: f32) -> Mesh {

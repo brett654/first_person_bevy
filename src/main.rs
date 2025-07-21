@@ -12,7 +12,7 @@ use bevy_rapier3d::prelude::*;
 
 fn main() {
     App::new()
-        .insert_resource(ClearColor(Color::srgb(0.678, 0.847, 0.902))) // light sky blue
+        .insert_resource(ClearColor(Color::srgb(0.678, 0.847, 0.902)))
         .add_plugins((
             DefaultPlugins,
             RapierPhysicsPlugin::<NoUserData>::default(),

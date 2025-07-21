@@ -24,7 +24,7 @@ pub fn setup_camera(mut commands: Commands) {
         Transform::from_xyz(10.0, 50.0, 10.0)
             .looking_at(Vec3::ZERO, Vec3::Y),
         GlobalTransform::default(),
-        RigidBody::Dynamic,
+        //RigidBody::Dynamic,
         Collider::capsule_y(0.9, 0.4), // height, radius
         Velocity::default(),
         GravityScale(1.0),

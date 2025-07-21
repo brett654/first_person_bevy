@@ -19,6 +19,7 @@ pub struct GameAssets {
     spider_scene: Handle<Scene>,
     terrain_scene: Handle<Scene>,
     skybox_scene: Handle<Scene>,
+    quake_map_scene: Handle<Scene>,
 }
 
 pub struct AssetPlugin;
@@ -44,6 +45,7 @@ pub fn load_assets(mut commands: Commands, asset_server: Res<AssetServer>) {
         spider_scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset("black_widow_animated_downloadable.glb")),
         terrain_scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset("terrain_test.glb")),
         skybox_scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset("nebula_skybox_16k.glb")),
+        quake_map_scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset("quake_the_slipgate_complex.glb")),
     });
 }
 
@@ -137,4 +139,6 @@ pub fn spawn_loaded_assets(
         SkyboxTag, // You can define this
     );
     */
+
+    spawn_scene(&mut commands, assets.quake_map_scene.clone(), Transform::from_translation(Vec3::ZERO).with_scale(Vec3::splat(10.0)), SkyboxTag);
 }
