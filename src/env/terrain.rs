@@ -2,29 +2,19 @@ use bevy::{
     color::palettes::css::*,
     prelude::*,
     
-    pbr::CascadeShadowConfigBuilder,
-    log::{info, warn, error, debug},
     render::{
         mesh::{Indices},
         render_asset::RenderAssetUsages,
         render_resource::{PrimitiveTopology},
     },
 };
-
-use bevy_rapier3d::{prelude::*};
+use bevy_rapier3d::prelude::*;
 
 pub struct TerrainPlugin;
 
 impl Plugin for TerrainPlugin {
     fn build(&self, app: &mut App) {
-        app
-        .insert_resource(AmbientLight {
-            affects_lightmapped_meshes: true,
-            color: Color::WHITE,
-            brightness: 0.3, // increase if needed
-        })
-        .add_systems(Startup, (spawn_ground_panel, spawn_cube, spawn_directional_light))
-        .add_systems(Update, log_positions_system);
+        app.add_systems(Startup, (spawn_ground_panel, spawn_cube));
     }
 }
 
