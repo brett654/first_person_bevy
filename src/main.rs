@@ -18,9 +18,9 @@ fn main() {
             RapierPhysicsPlugin::<NoUserData>::default(),
             CursorPlugin,
             PlayerPlugin,
-            LightPlugin,
+            //LightPlugin,
             TerrainPlugin,
-            AssetPlugin,
+            //AssetPlugin,
         ))
         .run();
 }
