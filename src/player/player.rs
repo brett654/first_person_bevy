@@ -8,6 +8,6 @@ impl Plugin for PlayerPlugin {
         app
             .add_systems(Startup, (setup_camera))
             .add_systems(Update, camera_mouse_look)
-            .add_systems(FixedUpdate, (camera_movement_with_collision));
+            .add_systems(FixedUpdate, (camera_movement_flying));
     }
 }
