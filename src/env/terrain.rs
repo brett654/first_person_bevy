@@ -2,11 +2,11 @@ use bevy::{
     color::palettes::css::*,
     prelude::*,
     pbr::CascadeShadowConfigBuilder,
-    render::{
-        mesh::{Indices},
-        render_asset::RenderAssetUsages,
-        render_resource::{PrimitiveTopology},
-    },
+    //render::{
+        //mesh::{Indices},
+        //render_asset::RenderAssetUsages,
+        //render_resource::{PrimitiveTopology},
+    //},
 };
 use bevy_rapier3d::prelude::*;
 pub struct TerrainPlugin;
@@ -27,12 +27,13 @@ impl Plugin for TerrainPlugin {
 #[derive(Component)] pub struct ShapeTag;
 
 #[derive(Component)] pub struct TerrainTag;
-
+/*
 fn log_positions_system(query: Query<&Transform, With<ShapeTag>>) {
     for transform in &query {
         println!("Cube Transform: {:?}", transform);
     }
 }
+*/
 
 fn spawn_ground_panel(
     mut commands: Commands,
@@ -101,27 +102,4 @@ fn spawn_directional_light(mut commands: Commands) {
         }
         .build(),
     ));
-}
-
-pub fn create_panel_mesh(width: f32, height: f32) -> Mesh {
-    let half_w = width / 2.0;
-    let half_h = height / 2.0;
-
-    let vertices = vec![
-        [-half_w, 0.0, -half_h], // bottom left
-        [half_w, 0.0, -half_h],  // bottom right
-        [half_w, 0.0, half_h],   // top right
-        [-half_w, 0.0, half_h],  // top left
-    ];
-
-    let normals = vec![[0.0, 1.0, 0.0]; 4];
-    let uvs = vec![[0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0]];
-    let indices = vec![0, 2, 1, 0, 3, 2];
-
-    let mut mesh = Mesh::new(PrimitiveTopology::TriangleList, RenderAssetUsages::RENDER_WORLD);
-    mesh.insert_attribute(Mesh::ATTRIBUTE_POSITION, vertices);
-    mesh.insert_attribute(Mesh::ATTRIBUTE_NORMAL, normals);
-    mesh.insert_attribute(Mesh::ATTRIBUTE_UV_0, uvs);
-    mesh.insert_indices(Indices::U32(indices));
-    mesh
 }

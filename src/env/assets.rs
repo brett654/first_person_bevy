@@ -1,12 +1,11 @@
 use bevy::{
     prelude::*,
-    gltf::GltfAssetLabel,
+    //gltf::GltfAssetLabel,
     scene::SceneRoot,
-    color::palettes::css::*,
+    //color::palettes::css::*,
 };
-
-#[derive(Component)]
-struct ApplyLightmap;
+use bevy_rapier3d::prelude::*;
+use bevy_rapier3d::geometry::AsyncSceneCollider;
 
 #[derive(Component)] pub struct DragonTag;
 
@@ -15,6 +14,8 @@ struct ApplyLightmap;
 #[derive(Component)] pub struct BoxTag;
 
 #[derive(Component)] pub struct SkyboxTag;
+
+#[derive(Component)] pub struct MapTag;
 
 #[derive(Resource)]
 pub struct GameAssets {
@@ -36,7 +37,10 @@ impl Plugin for AssetPlugin {
         app
             .init_resource::<LoadingTracker>()
             .add_systems(Startup, load_assets)
-            .add_systems(Update, spawn_loaded_assets);
+            .add_systems(Update, (
+                spawn_loaded_assets,
+                //add_colliders_to_scene.after(spawn_loaded_assets),
+            ));
     }
 }
 
@@ -65,8 +69,7 @@ pub fn load_assets(mut commands: Commands, asset_server: Res<AssetServer>) {
     });
 }
 
-
-fn spawn_scene<T: Component>(
+fn spawn_scene_with_collider<T: Component>(
     commands: &mut Commands,
     handle: Handle<Scene>,
     transform: Transform,
@@ -78,8 +81,8 @@ fn spawn_scene<T: Component>(
         GlobalTransform::default(),
         Visibility::Visible,
         InheritedVisibility::default(),
-        //NoFrustumCulling,
-        ApplyLightmap,
+        RigidBody::Fixed,
+        AsyncSceneCollider::default(), // This triggers collider generation from the scene mesh
         tag,
     ));
 }
@@ -162,7 +165,7 @@ pub fn spawn_loaded_assets(
     );
     */
 
-    spawn_scene(&mut commands, assets.quake_map_scene.clone(), Transform::from_translation(Vec3::ZERO).with_scale(Vec3::splat(10.0)), SkyboxTag);
+    spawn_scene_with_collider(&mut commands, assets.quake_map_scene.clone(), Transform::from_translation(Vec3::ZERO).with_scale(Vec3::splat(5.0)), MapTag);
 
     modify_lightmap_materials(gltf_assets, assets, standard_materials);
 }

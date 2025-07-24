@@ -12,6 +12,12 @@ pub struct MyCameraController {
     pub sensitivity: f32,
 }
 
+pub fn log_camera_positions_system(query: Query<&Transform, With<MyCameraController>>) {
+    for transform in &query {
+        println!("Camera Transform: {:?}", transform);
+    }
+}
+
 pub fn setup_camera(mut commands: Commands) {
     commands.spawn((
         Camera3d::default(),
@@ -21,11 +27,11 @@ pub fn setup_camera(mut commands: Commands) {
             far: 1000.0, // set far clipping plane to something reasonable
             ..default()
         }),
-        Transform::from_xyz(10.0, 50.0, 10.0)
+        Transform::from_xyz(70.0, 6.0, -20.0)
             .looking_at(Vec3::ZERO, Vec3::Y),
         GlobalTransform::default(),
-        //RigidBody::Dynamic,
-        Collider::capsule_y(0.9, 0.4), // height, radius
+        RigidBody::Dynamic,
+        Collider::capsule_y(1.5, 0.4), // height, radius
         Velocity::default(),
         GravityScale(1.0),
         LockedAxes::ROTATION_LOCKED,
