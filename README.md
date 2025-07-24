@@ -1,11 +1,8 @@
 Using the bevy engine to create a first person experience where I can load assets.
 
 TODOS:
-- implement collisions
-- Have quake style movement
-- Use a panel with perlin noise for generating terrain instead of a glb file
+- Implement collisions for glb assets
+- Implement shooting with either projectiles or a raycaster, or both
 
 Issues:
-- assets not render all verticies(due to UV layers not supported)
-  - Solution:
-    - make own assets
+- Shadows do not move with a cube after it's position is transformed with physics, shasows are only generates once the program starts for the cube, then the shadow does not move with the cube
