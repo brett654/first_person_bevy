@@ -1,11 +1,12 @@
 use bevy::prelude::*;
-use super::camera::{MyCameraController};
+use crate::player::player::*;
+
 use bevy_rapier3d::prelude::*;
 
 pub fn camera_movement_flying(
     keys: Res<ButtonInput<KeyCode>>,
     time: Res<Time>,
-    mut query: Query<&mut Transform, With<MyCameraController>>,
+    mut query: Query<&mut Transform, With<CameraController>>,
 ) {
     let Ok(mut transform) = query.single_mut() else { return };
 
@@ -41,7 +42,7 @@ pub fn camera_movement_flying(
 pub fn camera_movement_with_collision(
     keys: Res<ButtonInput<KeyCode>>,
     time: Res<Time>,
-    mut query: Query<(&mut Velocity, &Transform), With<MyCameraController>>,
+    mut query: Query<(&mut Velocity, &Transform), With<CameraController>>,
 ) {
     let Ok((mut velocity, transform)) = query.single_mut() else { return };
 
@@ -102,4 +103,42 @@ pub fn camera_movement_with_collision(
 
     // --- Restore vertical velocity ---
 velocity.linvel.y = vertical_velocity;
+}
+
+pub fn switch_movement_mode(
+    keys: Res<ButtonInput<KeyCode>>,
+    mut query: Query<(&mut MovementMode, &mut GravityScale), With<CameraController>>,
+) {
+    if keys.just_pressed(KeyCode::KeyF) {
+        let Ok((mut mode, mut gravity)) = query.single_mut() else { return };
+
+        *mode = match *mode {
+            MovementMode::Flying => {
+                *gravity = GravityScale(1.0);
+                MovementMode::Grounded
+            }
+            MovementMode::Grounded => {
+                *gravity = GravityScale(0.0);
+                MovementMode::Flying
+            }
+        };
+
+        println!("Switched to mode: {:?}", mode);
+    }
+}
+
+pub fn is_grounded_mode(query: Query<&MovementMode, With<CameraController>>) -> bool {
+    if let Ok(mode) = query.single() {
+        *mode == MovementMode::Grounded
+    } else {
+        false
+    }
+}
+
+pub fn is_flying_mode(query: Query<&MovementMode, With<CameraController>>) -> bool {
+    if let Ok(mode) = query.single() {
+        *mode == MovementMode::Flying
+    } else {
+        false
+    }
 }

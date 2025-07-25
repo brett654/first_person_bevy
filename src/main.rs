@@ -20,7 +20,7 @@ fn main() {
             PlayerPlugin,
             //LightPlugin,
             TerrainPlugin,
-            AssetPlugin,
+            //AssetPlugin,
         ))
         .run();
 }
