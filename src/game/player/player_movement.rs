@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use crate::player::player::*;
+use super::{player::CameraController, player::MovementMode};
 
 use bevy_rapier3d::prelude::*;
 

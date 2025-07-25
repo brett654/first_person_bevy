@@ -3,7 +3,7 @@ use bevy::{
     prelude::*,
 };
 
-use crate::player::player::CameraController;
+use super::player;
 /*
 pub fn log_camera_positions_system(query: Query<&Transform, With<CameraController>>) {
     for transform in &query {
@@ -13,7 +13,7 @@ pub fn log_camera_positions_system(query: Query<&Transform, With<CameraControlle
 */
 pub fn camera_mouse_look(
     mut mouse_motion_events: EventReader<MouseMotion>,
-    mut query: Query<(&mut CameraController, &mut Transform)>,
+    mut query: Query<(&mut player::CameraController, &mut Transform)>,
     windows: Query<&Window>,
 ) {
     let window = match windows.single() {

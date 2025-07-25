@@ -9,7 +9,11 @@ pub struct TerrainPlugin;
 impl Plugin for TerrainPlugin {
     fn build(&self, app: &mut App) {
         app
-        .add_systems(Startup, (spawn_ground_panel, spawn_cube, spawn_directional_light));
+        .add_systems(PostStartup, (
+            spawn_ground_panel,
+            spawn_cube,
+            spawn_directional_light
+        ));
     }
 }
 
@@ -17,7 +21,7 @@ impl Plugin for TerrainPlugin {
 
 #[derive(Component)] pub struct TerrainTag;
 
-fn spawn_ground_panel(
+pub fn spawn_ground_panel(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,   
@@ -40,7 +44,7 @@ fn spawn_ground_panel(
     ));
 }
 
-fn spawn_cube(
+pub fn spawn_cube(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
@@ -59,7 +63,7 @@ fn spawn_cube(
     ));   
 }
 
-fn spawn_directional_light(mut commands: Commands) {
+pub fn spawn_directional_light(mut commands: Commands) {
     commands.spawn((
         DirectionalLight {
             illuminance: light_consts::lux::OVERCAST_DAY,

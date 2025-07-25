@@ -4,7 +4,6 @@ use bevy::{
     scene::SceneRoot,
     //color::palettes::css::*,
 };
-use bevy_rapier3d::prelude::*;
 use bevy_rapier3d::geometry::AsyncSceneCollider;
 
 #[derive(Component)] pub struct DragonTag;
@@ -28,20 +27,6 @@ pub struct GameAssets {
     */
     quake_map_scene: Handle<Scene>,
     quake_map: Handle<Gltf>,
-}
-
-pub struct AssetPlugin;
-
-impl Plugin for AssetPlugin {
-    fn build(&self, app: &mut App) {
-        app
-            .init_resource::<LoadingTracker>()
-            .add_systems(Startup, load_assets)
-            .add_systems(Update, (
-                spawn_loaded_assets,
-                //add_colliders_to_scene.after(spawn_loaded_assets),
-            ));
-    }
 }
 
 #[derive(Default, Resource)]
@@ -79,9 +64,6 @@ fn spawn_scene_with_collider<T: Component>(
         SceneRoot(handle),
         transform,
         GlobalTransform::default(),
-        Visibility::Visible,
-        InheritedVisibility::default(),
-        RigidBody::Fixed,
         AsyncSceneCollider::default(), // This triggers collider generation from the scene mesh
         tag,
     ));
@@ -170,7 +152,7 @@ pub fn spawn_loaded_assets(
     modify_lightmap_materials(gltf_assets, assets, standard_materials);
 }
 
-fn modify_lightmap_materials(
+pub fn modify_lightmap_materials(
     gltfs: Res<Assets<Gltf>>,
     game_assets: Res<GameAssets>,
     mut materials: ResMut<Assets<StandardMaterial>>,
