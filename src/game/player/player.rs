@@ -47,7 +47,7 @@ fn setup_player(
             .looking_at(Vec3::ZERO, Vec3::Y),
         GlobalTransform::default(),
         RigidBody::Dynamic,
-        Collider::capsule_y(player_height, player_radius),       // Capsule collider: height 1.5, radius 0.4
+        Collider::capsule_y(player_height, player_radius),
         Velocity::default(),
         GravityScale(1.0),
         LockedAxes::ROTATION_LOCKED,
@@ -57,7 +57,7 @@ fn setup_player(
             sensitivity: 0.001,
         },
         MovementMode::Grounded,
-        Player {}, // Your custom player marker component if you have one
+        Player {},
     )).id();
 
     let camera_entity = commands.spawn((

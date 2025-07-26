@@ -44,6 +44,8 @@ pub fn camera_movement_with_collision(
     time: Res<Time>,
     mut query: Query<(&mut Velocity, &Transform), With<CameraController>>,
 ) {
+    let jump_height = 6.0;
+
     let Ok((mut velocity, transform)) = query.single_mut() else { return };
 
     let mut wish_dir = Vec3::ZERO;
@@ -61,7 +63,7 @@ pub fn camera_movement_with_collision(
         wish_dir += *transform.right();
     }
     if keys.just_pressed(KeyCode::Space) {
-        velocity.linvel.y = 6.0; // tweak for jump height
+        velocity.linvel.y = jump_height;
     }
 
     // Project onto XZ plane
