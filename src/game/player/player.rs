@@ -65,8 +65,8 @@ fn setup_player(
         Projection::Perspective(PerspectiveProjection {
             aspect_ratio: 16.0 / 9.0,
             fov: std::f32::consts::FRAC_PI_3,
-            near: 0.1,
-            far: 1000.0,
+            //near: 0.1,
+            //far: 1000.0,
             ..default()
         }),
         Camera {

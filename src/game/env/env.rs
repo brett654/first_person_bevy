@@ -11,7 +11,6 @@ impl Plugin for EnvPlugin {
             .init_resource::<assets::LoadingTracker>()
             .add_systems(Startup, assets::declare_assets)
             .add_systems(PostStartup, terrain::spawn_ground_panel)
-            .add_systems(PostStartup, terrain::spawn_ground_panel)
             .add_systems(PostStartup, terrain::spawn_cube)
             .add_systems(PostStartup, terrain::spawn_directional_light)
             .add_systems(Update, (

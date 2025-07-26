@@ -29,16 +29,17 @@ pub fn spawn_ground_panel(
 ) {
     let panel_width = 200.0;
     let panel_height = 200.0;
- 
+    let subdivisions = 10;
+
     commands.spawn((
-        Mesh3d(meshes.add(Plane3d::default().mesh().size(panel_width, panel_height))),
+        Mesh3d(meshes.add(Plane3d::default().mesh().size(panel_width, panel_height).subdivisions(subdivisions))),
         MeshMaterial3d(materials.add(StandardMaterial {
             base_color: SILVER.into(),
             perceptual_roughness: 1.0,
             //double_sided: true,
             ..default()
         })),
-        Transform::from_xyz(0.0, 0.01, 0.0),
+        Transform::IDENTITY,
         Collider::cuboid(panel_width / 2.0, 0.01, panel_height / 2.0),
         RigidBody::Fixed,
         TerrainTag,
@@ -53,7 +54,7 @@ pub fn spawn_cube(
     commands.spawn((
         Mesh3d(meshes.add(Cuboid::default())),
         MeshMaterial3d(materials.add(StandardMaterial {
-            base_color: DEEP_PINK.into(),
+            base_color: DARK_GREY.into(),
             perceptual_roughness: 0.3,
             metallic: 0.7,
             ..default()
@@ -63,7 +64,17 @@ pub fn spawn_cube(
         Collider::cuboid(0.5, 0.5, 0.5),
         RigidBody::Dynamic,
         ShapeTag,
-    ));   
+    ));
+
+    commands.spawn((
+        Mesh3d(meshes.add(Sphere::default())),
+        MeshMaterial3d(materials.add(StandardMaterial {
+            base_color: GOLDENROD.into(),
+            metallic: 1.0,
+            ..default()
+        })),
+        Transform::from_xyz(10.0, 1.0, 0.0),
+    ));    
 }
 
 pub fn spawn_directional_light(mut commands: Commands) {
@@ -75,7 +86,7 @@ pub fn spawn_directional_light(mut commands: Commands) {
         },
         Transform::from_xyz(10.0, 30.0, 20.0).looking_at(Vec3::ZERO, Vec3::Y),
         CascadeShadowConfigBuilder {
-            num_cascades: 3,
+            num_cascades: 4,
             maximum_distance: 100.0,
             ..default()
         }
